@@ -2,18 +2,25 @@ package Model;
 
 public class Order {
 	int oid;
+	int pid;
+	int uid;
+	int qty;
 	String name;
 	String address;
 	String email;
 	String phone;
 	double total;
+	
 	public Order() {
 		
 	}
 	
-	public Order(int oid, String name, String address, String email, String phone, double total) {
+	public Order(int oid, int pid, int uid,int qty, String name, String address, String email, String phone, double total) {
 		
 		this.oid = oid;
+		this.pid = pid;
+		this.uid = uid;
+		this.qty = qty;
 		this.name = name;
 		this.address = address;
 		this.email = email;
@@ -25,6 +32,18 @@ public class Order {
 
 	public void setOid(int oid) {
 		this.oid = oid;
+	}
+	
+	public void setPid(int pid) {
+		this.pid = pid;
+	}
+	
+	public void setUid(int uid) {
+		this.uid = uid;
+	}
+	
+	public void setQty(int qty) {
+		this.qty = qty;
 	}
 
 	public void setName(String name) {
@@ -50,7 +69,20 @@ public class Order {
 	public int getOid() {
 		return oid;
 	}
+	
+	public int getPid() {
+		return pid;
+	}
+	
+	public int getUid() {
+		return uid;
+	}
+	
+	public int getQty() {
+		return qty;
+	}
 
+	
 	public String getName() {
 		return name;
 	}

@@ -25,7 +25,7 @@ public class orderService {
 	orderController orders = new orderController();
 
 	
-	// get all types
+	// get all orders
 	
 	@GET
 	@Path("/")
@@ -35,7 +35,7 @@ public class orderService {
 	}
 
 
-	// add types
+	// add orders
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON) 
@@ -46,6 +46,9 @@ public class orderService {
 	
 		Order odr = new Order();
 		
+		odr.setPid(djosnObj.get("productId").getAsInt());
+		odr.setUid(djosnObj.get("userId").getAsInt());
+		odr.setQty(djosnObj.get("quantity").getAsInt());
 		odr.setName(djosnObj.get("name").getAsString());
 		odr.setAddress(djosnObj.get("address").getAsString());
 		odr.setEmail(djosnObj.get("email").getAsString());
@@ -61,7 +64,7 @@ public class orderService {
 	
 	
 	
-	// update Types
+	// update orders
 		@PUT
 		@Path("/")
 		@Consumes(MediaType.APPLICATION_JSON)
@@ -73,6 +76,9 @@ public class orderService {
 			Order odr = new Order();
 
 			odr.setOid(djosnObj.get("orderId").getAsInt());
+			odr.setPid(djosnObj.get("productId").getAsInt());
+			odr.setUid(djosnObj.get("userId").getAsInt());
+			odr.setQty(djosnObj.get("quantity").getAsInt());
 			odr.setName(djosnObj.get("name").getAsString());
 			odr.setAddress(djosnObj.get("address").getAsString());
 			odr.setEmail(djosnObj.get("email").getAsString());
@@ -87,7 +93,7 @@ public class orderService {
 	
 
 
-		// delete Types
+		// delete orders
 		
 		@DELETE
 		@Path("/")

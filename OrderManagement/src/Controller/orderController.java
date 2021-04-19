@@ -31,7 +31,7 @@ public class orderController {
 			}
 			// Prepare the html table to be displayed
 			output = "<table border=\"1\"><tr><th>OrderID</th>"
-					+ "<th>Name</th><th>Adderss</th>" + "<th>Email</th> "+"<th>Phone</th> "+" <th>Total</th></tr>";
+					+ "<th>ProductID</th> "+" <th>UserID</th> "+" <th>Quantity</th> "+" <th>Name</th> "+" <th> Adderss</th>" + "<th>Email</th> "+"<th>Phone</th> "+" <th>Total</th></tr>";
 
 			String query = "select * from orders";
 			Statement stmt = con.createStatement();
@@ -41,6 +41,9 @@ public class orderController {
 			while (rs.next()) {
 
 				order.setOid(rs.getInt("orderId"));
+				order.setPid(rs.getInt("productId"));
+				order.setUid(rs.getInt("userId"));
+				order.setQty(rs.getInt("quantity"));
 				order.setName(rs.getString("name"));
 				order.setAddress(rs.getString("address"));
 				order.setEmail(rs.getString("email"));
@@ -49,6 +52,9 @@ public class orderController {
 
 				// Add into the html table
 				output += "<tr><td>" + order.getOid() + "</td>";
+				output += "<td>" + order.getPid() + "</td>";
+				output += "<td>" + order.getUid() + "</td>";
+				output += "<td>" + order.getQty() + "</td>";
 				output += "<td>" + order.getName() + "</td>";
 				output += "<td>" + order.getAddress() + "</td>";
 				output += "<td>" + order.getEmail()+ "</td>";
@@ -61,7 +67,7 @@ public class orderController {
 			output += "</table>";
 
 		} catch (Exception e) {
-			output = "Error while reading the appoinmentTypes Details.";
+			output = "Error while reading the Order Details.";
 			System.err.println(e.getMessage());
 		}
 
@@ -69,7 +75,7 @@ public class orderController {
 	}
 	
 	
-	//========================== Add In To Appointment Types =========================
+	//========================== Add Orders =========================
 	
 		
 	public String addOrders(Order order) {
@@ -83,15 +89,18 @@ public class orderController {
 				}
 
 				// create a prepared statement
-				String query = " INSERT INTO orders (name, address, email,phone,total) VALUES (?, ?, ?, ?, ?)";
+				String query = " INSERT INTO orders (productId,userId,quantity,name, address, email,phone,total) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement preparedStmt = con.prepareStatement(query);
 
 				// binding values
-				preparedStmt.setString(1, order.getName());
-				preparedStmt.setString(2, order.getAddress());
-				preparedStmt.setString(3, order.getEmail());
-				preparedStmt.setString(4, order.getPhone());
-				preparedStmt.setDouble(5, order.getTotal());
+				preparedStmt.setInt(1, order.getPid());
+				preparedStmt.setInt(2, order.getUid());
+				preparedStmt.setInt(3, order.getQty());
+				preparedStmt.setString(4, order.getName());
+				preparedStmt.setString(5, order.getAddress());
+				preparedStmt.setString(6, order.getEmail());
+				preparedStmt.setString(7, order.getPhone());
+				preparedStmt.setDouble(8, order.getTotal());
 				
 				// execute the statement
 				preparedStmt.execute();
@@ -108,7 +117,7 @@ public class orderController {
 	
 	
 	
-		//============================= Update Appointment Type ==============================
+		//============================= Update Orders ==============================
 		
 	
 			public String updateOrders(Order order) {
@@ -121,17 +130,19 @@ public class orderController {
 						return "Error while connecting to the database for updating.";
 					}
 					// create a prepared statement
-					String query = "UPDATE orders SET name=?,address=?,email=?,phone=?,total=? WHERE orderId =?";
+					String query = "UPDATE orders SET productId=?,userId=?,quantity=?, name=?,address=?,email=?,phone=?,total=? WHERE orderId =?";
 					PreparedStatement preparedStmt = con.prepareStatement(query);
 
 					// binding values
-
-					preparedStmt.setString(1, order.getName());
-					preparedStmt.setString(2, order.getAddress());
-					preparedStmt.setString(3, order.getEmail());
-					preparedStmt.setString(4, order.getPhone());
-					preparedStmt.setDouble(5, order.getTotal());
-					preparedStmt.setDouble(6, order.getOid());
+					preparedStmt.setInt(1, order.getPid());
+					preparedStmt.setInt(2, order.getUid());
+					preparedStmt.setInt(3, order.getQty());
+					preparedStmt.setString(4, order.getName());
+					preparedStmt.setString(5, order.getAddress());
+					preparedStmt.setString(6, order.getEmail());
+					preparedStmt.setString(7, order.getPhone());
+					preparedStmt.setDouble(8, order.getTotal());
+					preparedStmt.setInt(9, order.getOid());
 					// execute the statement
 					preparedStmt.execute();
 					con.close();
@@ -144,7 +155,7 @@ public class orderController {
 			}
 
 
-			//============================= Delete Appointment Type ==============================	
+			//============================= Delete Orders ==============================	
 		
 			
 			public String deleteOrders(Order order) {
@@ -162,8 +173,7 @@ public class orderController {
 
 					// binding values
 					 preparedStmt.setInt(1, order.getOid());
-					//preparedStmt.setInt(4, appBean.getAppointment_Id());
-					// execute the statement
+
 					preparedStmt.execute();
 					con.close();
 					output = "Deleted successfully [ Order Id : "+order.getOid()+" ]";
