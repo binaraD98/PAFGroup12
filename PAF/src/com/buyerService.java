@@ -16,9 +16,6 @@ import Controller.buyerController;
 import Model.Buyer;
 
 
-
-
-
 @Path("/buyers")
 public class buyerService  {
 	
@@ -26,7 +23,6 @@ public class buyerService  {
 
 	
 	// get all types
-	
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
@@ -63,7 +59,7 @@ public class buyerService  {
 	
 	
 	
-	
+	//login
 	@POST
 	@Path("/login")
 	@Consumes(MediaType.APPLICATION_JSON) 
@@ -87,7 +83,7 @@ public class buyerService  {
 	
 	
 	
-	// update Types
+		// update Types
 		@PUT
 		@Path("/")
 		@Consumes(MediaType.APPLICATION_JSON)
@@ -126,12 +122,11 @@ public class buyerService  {
 			// Convert the input string to a JSON object
 			JsonObject doc = new JsonParser().parse(TypeData).getAsJsonObject();
 
-//			JsonObject djosnObj = new JsonParser().parse(TypeData).getAsJsonObject();
 			Buyer byr = new Buyer();
 			
 			// Read the value from the element <ID>
 	    	byr.setUid(doc.get("buyerId").getAsInt());
-			//String id = doc.get("appointment_Id").getAsString();
+			
 			String output = buyers.deleteBuyers(byr);
 			return output;
 		}

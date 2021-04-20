@@ -2,7 +2,6 @@ package Model;
 
 public class Buyer {
 
-	
 	int bid;
 	String name;
 	String company;
@@ -42,8 +41,6 @@ public class Buyer {
 	}
 	
 
-	
-	
 	public void setAddress(String address) {
 		this.address = address;
 	}
@@ -94,7 +91,5 @@ public class Buyer {
 
 	
 	
-	
-
 }
 

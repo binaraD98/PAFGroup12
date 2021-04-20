@@ -14,8 +14,8 @@ public class researcherController {
 	
 	DBConnection dbObj = new DBConnection();
 
-	//===================== View Orders ==========================
 	
+	//View Researcher Details
 	
 	public String viewResearchers() {
 
@@ -39,22 +39,22 @@ public class researcherController {
 			// iterate through the rows in the result set
 			while (rs.next()) {
 
-				researcher.setUid(rs.getInt("userId"));
-				researcher.setPassword(rs.getString("password"));
-				researcher.setAddress(rs.getString("address"));
-				researcher.setEmail(rs.getString("email"));
-				researcher.setPhone(rs.getString("phone"));
+			researcher.setUid(rs.getInt("userId"));
+			researcher.setPassword(rs.getString("password"));
+			researcher.setAddress(rs.getString("address"));
+			researcher.setEmail(rs.getString("email"));
+			researcher.setPhone(rs.getString("phone"));
 			
 
-				// Add into the html table
-				output += "<tr><td>" + researcher.getUid() + "</td>";
-				output += "<td>" + researcher.getPassword() + "</td>";
-				output += "<td>" + researcher.getAddress() + "</td>";
-				output += "<td>" + researcher.getEmail()+ "</td>";
-				output += "<td>" + researcher.getPhone()+ "</td>";
-				
+			// Add into the html table
+			output += "<tr><td>" + researcher.getUid() + "</td>";
+			output += "<td>" + researcher.getPassword() + "</td>";
+			output += "<td>" + researcher.getAddress() + "</td>";
+			output += "<td>" + researcher.getEmail()+ "</td>";
+			output += "<td>" + researcher.getPhone()+ "</td>";
 				
 			}
+			
 			con.close();
 			// Complete the html table
 			output += "</table>";
@@ -67,6 +67,7 @@ public class researcherController {
 		return output;
 	}
 	
+	//login researcher validate
 	
 	public String loginResearchers(Researcher researcher) {
 
@@ -111,15 +112,8 @@ public class researcherController {
 		return output;
 	}
 	
+	//Add Researcher details
 	
-	
-	
-	
-	
-	
-	//========================== Add In To Appointment Types =========================
-	
-		
 	public String addResearchers(Researcher researcher) {
 
 			String output = "";
@@ -140,7 +134,6 @@ public class researcherController {
 				preparedStmt.setString(3, researcher.getEmail());
 				preparedStmt.setString(4, researcher.getPhone());
 				
-				
 				// execute the statement
 				preparedStmt.execute();
 				con.close();
@@ -155,11 +148,9 @@ public class researcherController {
 		}
 	
 	
-	
-		//============================= Update Appointment Type ==============================
+	//Update Researcher details
 		
-	
-			public String updateResearchers(Researcher researcher) {
+	public String updateResearchers(Researcher researcher) {
 
 				String output = "";
 
@@ -173,8 +164,6 @@ public class researcherController {
 					PreparedStatement preparedStmt = con.prepareStatement(query);
 
 					// binding values
-
-					
 					preparedStmt.setString(1, researcher.getPassword());
 					preparedStmt.setString(2, researcher.getAddress());
 				    preparedStmt.setString(3, researcher.getEmail());
@@ -194,10 +183,9 @@ public class researcherController {
 			}
 
 
-			//============================= Delete Appointment Type ==============================	
+	//Delete Researcher
 		
-			
-			public String deleteResearchers(Researcher researcher) {
+	public String deleteResearchers(Researcher researcher) {
 				String output = "";
 				try {
 
@@ -212,8 +200,6 @@ public class researcherController {
 
 					// binding values
 					 preparedStmt.setInt(1, researcher.getUid());
-					//preparedStmt.setInt(4, appBean.getAppointment_Id());
-					// execute the statement
 					preparedStmt.execute();
 					con.close();
 					output = "Deleted successfully [ User Id : "+researcher.getUid()+" ]";

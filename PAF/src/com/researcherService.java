@@ -25,7 +25,6 @@ public class researcherService {
 
 	
 	// get all types
-	
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
@@ -59,9 +58,8 @@ public class researcherService {
 	}
 	
 	
-	////login////
+	//login
 	
-
 	@POST
 	@Path("/login")
 	@Consumes(MediaType.APPLICATION_JSON) 
@@ -84,8 +82,6 @@ public class researcherService {
 	}
 	
 
-	
-	
 	
 	// update Types
 		@PUT
@@ -111,8 +107,6 @@ public class researcherService {
 	
 	
 	
-
-
 		// delete Types
 		
 		@DELETE
@@ -123,12 +117,11 @@ public class researcherService {
 			// Convert the input string to a JSON object
 			JsonObject doc = new JsonParser().parse(TypeData).getAsJsonObject();
 
-//			JsonObject djosnObj = new JsonParser().parse(TypeData).getAsJsonObject();
 			Researcher rsc = new Researcher();
 			
 			// Read the value from the element <ID>
 	    	rsc.setUid(doc.get("userId").getAsInt());
-			//String id = doc.get("appointment_Id").getAsString();
+			
 			String output = researchers.deleteResearchers(rsc);
 			return output;
 		}

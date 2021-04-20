@@ -15,8 +15,8 @@ public class buyerController {
 	
 	DBConnection dbObj = new DBConnection();
 
-	//===================== View Orders ==========================
 	
+	//View Buyer details
 	
 	public String viewBuyers() {
 
@@ -73,6 +73,8 @@ public class buyerController {
 	}
 	
 	
+	//Buyer login validation
+	
 	public String loginBuyers(Buyer buyer) {
 
 		String output = "";
@@ -117,14 +119,8 @@ public class buyerController {
 	}
 	
 	
+	//Add Buyer Details
 	
-	
-	
-	
-	
-	//========================== Add In To Appointment Types =========================
-	
-		
 	public String addBuyers(Buyer buyer) {
 
 			String output = "";
@@ -147,8 +143,6 @@ public class buyerController {
 				preparedStmt.setString(5, buyer.getPhone());
 				preparedStmt.setString(6, buyer.getPassword());
 				
-				
-				
 				// execute the statement
 				preparedStmt.execute();
 				con.close();
@@ -164,10 +158,9 @@ public class buyerController {
 	
 	
 	
-		//============================= Update Appointment Type ==============================
+		//Update Buyer Details
 		
-	
-			public String updateBuyers(Buyer buyer) {
+		public String updateBuyers(Buyer buyer) {
 
 				String output = "";
 
@@ -181,8 +174,6 @@ public class buyerController {
 					PreparedStatement preparedStmt = con.prepareStatement(query);
 
 					// binding values
-
-					
 					preparedStmt.setString(1, buyer.getName());
 					preparedStmt.setString(2, buyer.getCompany());
 					preparedStmt.setString(3, buyer.getAddress());
@@ -204,10 +195,10 @@ public class buyerController {
 			}
 
 
-			//============================= Delete Appointment Type ==============================	
+			//Delete Buyer Details
 		
-			
 			public String deleteBuyers(Buyer buyer) {
+				
 				String output = "";
 				try {
 
@@ -222,8 +213,6 @@ public class buyerController {
 
 					// binding values
 					 preparedStmt.setInt(1, buyer.getBid());
-					//preparedStmt.setInt(4, appBean.getAppointment_Id());
-					// execute the statement
 					preparedStmt.execute();
 					con.close();
 					output = "Deleted successfully [ Buyer Id : "+buyer.getBid()+" ]";

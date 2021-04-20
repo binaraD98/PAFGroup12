@@ -22,7 +22,6 @@ public class Researcher {
 	}
 	
 	
-
 	public void setUid(int uid) {
 		this.uid = uid;
 	}
@@ -70,8 +69,5 @@ public class Researcher {
 	}
 
 	
-	
-	
-
 }
 
