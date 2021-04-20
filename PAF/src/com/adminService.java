@@ -69,7 +69,7 @@ public class adminService {
 	@Path("/login")
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@Produces(MediaType.TEXT_PLAIN)
-	public String enterbuyerlogin(String TypeData) {
+	public String enteradminlogin(String TypeData) {
 		// Convert the input string to a JSON object
 		JsonObject djosnObj = new JsonParser().parse(TypeData).getAsJsonObject();
 	
