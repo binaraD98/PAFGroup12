@@ -11,6 +11,16 @@
 		<url-pattern>/adminService/*</url-pattern>
 	</servlet-mapping>
 	
+	<servlet-mapping>
+		<servlet-name>Jersey Web Application</servlet-name>
+		<url-pattern>/buyerService/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>Jersey Web Application</servlet-name>
+		<url-pattern>/researcherService/*</url-pattern>
+	</servlet-mapping>
+	
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>

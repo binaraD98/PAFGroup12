@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import DBUtil.DBConnection;
 import Model.Admin;
+import Model.Buyer;
 import Model.Researcher;
 
 
@@ -131,6 +132,51 @@ public class adminController  {
 			// Complete the html table
 			output += "</table>";
 
+		} catch (Exception e) {
+			output = "Error while reading the userTypes Details.";
+			System.err.println(e.getMessage());
+		}
+
+		return output;
+	}
+	
+	
+	
+	public String loginAdmins(Admin admin) {
+
+		String output = "";
+		
+		Admin adminauth = new Admin();
+		
+		try {
+			Connection con = dbObj.connect();
+			if (con == null) {
+				return "Error while connecting to the database for reading.";
+			}
+			
+			
+
+			String query = "select * from admin WHERE email = '"+admin.getEmail()+"' " ;
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+
+			// iterate through the rows in the result set
+			while (rs.next()) {
+				
+				adminauth.setPassword(rs.getString("password"));
+				
+			}
+			con.close();
+			if(admin.getPassword().equals(adminauth.getPassword()))
+			{
+				
+				output = "login succesfull";
+			}
+			else {
+				output = "login unsuccesfull";
+			}
+			
+			
 		} catch (Exception e) {
 			output = "Error while reading the userTypes Details.";
 			System.err.println(e.getMessage());

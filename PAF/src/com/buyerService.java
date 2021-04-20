@@ -60,7 +60,30 @@ public class buyerService  {
 		return output;
 
 	}
+	
+	
+	
+	
+	@POST
+	@Path("/login")
+	@Consumes(MediaType.APPLICATION_JSON) 
+	@Produces(MediaType.TEXT_PLAIN)
+	public String enterbuyerlogin(String TypeData) {
+		// Convert the input string to a JSON object
+		JsonObject djosnObj = new JsonParser().parse(TypeData).getAsJsonObject();
+	
+		Buyer byr = new Buyer();
+		
+		
+		byr.setEmail(djosnObj.get("email").getAsString());
+		byr.setPassword(djosnObj.get("password").getAsString());
+	   
+		// Read the values from the JSON object
+	
+		String output = buyers.loginBuyers(byr);
+		return output;
 
+	}
 	
 	
 	

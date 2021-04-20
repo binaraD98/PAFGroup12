@@ -73,6 +73,55 @@ public class buyerController {
 	}
 	
 	
+	public String loginBuyers(Buyer buyer) {
+
+		String output = "";
+		
+		Buyer buyerauth = new Buyer();
+		
+		try {
+			Connection con = dbObj.connect();
+			if (con == null) {
+				return "Error while connecting to the database for reading.";
+			}
+			
+			
+
+			String query = "select * from buyer WHERE email = '"+buyer.getEmail()+"' " ;
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+
+			// iterate through the rows in the result set
+			while (rs.next()) {
+				
+				buyerauth.setPassword(rs.getString("password"));
+				
+			}
+			con.close();
+			if(buyer.getPassword().equals(buyerauth.getPassword()))
+			{
+				
+				output = "login succesfull";
+			}
+			else {
+				output = "login unsuccesfull";
+			}
+			
+			
+		} catch (Exception e) {
+			output = "Error while reading the userTypes Details.";
+			System.err.println(e.getMessage());
+		}
+
+		return output;
+	}
+	
+	
+	
+	
+	
+	
+	
 	//========================== Add In To Appointment Types =========================
 	
 		

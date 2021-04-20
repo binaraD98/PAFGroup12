@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import DBUtil.DBConnection;
+import Model.Admin;
 import Model.Researcher;
 
 
@@ -65,6 +66,55 @@ public class researcherController {
 
 		return output;
 	}
+	
+	
+	public String loginResearchers(Researcher researcher) {
+
+		String output = "";
+		
+		Researcher researcherauth = new Researcher();
+		
+		try {
+			Connection con = dbObj.connect();
+			if (con == null) {
+				return "Error while connecting to the database for reading.";
+			}
+			
+			
+
+			String query = "select * from researcher WHERE email = '"+researcher.getEmail()+"' " ;
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+
+			// iterate through the rows in the result set
+			while (rs.next()) {
+				
+				researcherauth.setPassword(rs.getString("password"));
+				
+			}
+			con.close();
+			if(researcher.getPassword().equals(researcherauth.getPassword()))
+			{
+				
+				output = "login succesfull";
+			}
+			else {
+				output = "login unsuccesfull";
+			}
+			
+			
+		} catch (Exception e) {
+			output = "Error while reading the userTypes Details.";
+			System.err.println(e.getMessage());
+		}
+
+		return output;
+	}
+	
+	
+	
+	
+	
 	
 	
 	//========================== Add In To Appointment Types =========================

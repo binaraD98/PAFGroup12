@@ -14,6 +14,7 @@ import com.google.gson.JsonParser;
 
 import Controller.adminController;
 import Model.Admin;
+import Model.Buyer;
 import Model.Researcher;
 
 
@@ -63,6 +64,33 @@ public class adminService {
 
 	}
 
+	
+	/////login/////
+	
+	
+	
+
+	@POST
+	@Path("/login")
+	@Consumes(MediaType.APPLICATION_JSON) 
+	@Produces(MediaType.TEXT_PLAIN)
+	public String enterbuyerlogin(String TypeData) {
+		// Convert the input string to a JSON object
+		JsonObject djosnObj = new JsonParser().parse(TypeData).getAsJsonObject();
+	
+		Admin adm = new Admin();
+		
+		
+		adm.setEmail(djosnObj.get("email").getAsString());
+		adm.setPassword(djosnObj.get("password").getAsString());
+	   
+		// Read the values from the JSON object
+	
+		String output = admins.loginAdmins(adm);
+		return output;
+
+	}
+	
 	
 	
 //	
