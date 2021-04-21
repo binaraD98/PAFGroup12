@@ -49,7 +49,7 @@ public class adminController  {
 				admin.setEmail(rs.getString("email"));
 				admin.setPhone(rs.getString("phone"));
 				admin.setPassword(rs.getString("password"));
-				admin.setAmount(rs.getString("amount"));
+				admin.setAmount(rs.getDouble("amount"));
 				admin.setlisencenum(rs.getString("lisencenum"));
 
 				// Add into the html table
@@ -148,7 +148,7 @@ public class adminController  {
 				preparedStmt.setString(4, admin.getEmail());
 				preparedStmt.setString(5, admin.getPhone());
 				preparedStmt.setString(6, admin.getPassword());
-				preparedStmt.setString(7, admin.getAmount());
+				preparedStmt.setDouble(7, admin.getAmount());
 				preparedStmt.setString(8, admin.getLisencenum());
 				
 				
@@ -186,7 +186,7 @@ public class adminController  {
 		    preparedStmt.setString(4, admin.getEmail());
 		    preparedStmt.setString(5, admin.getPhone());
 		    preparedStmt.setString(6, admin.getPassword());
-		    preparedStmt.setString(7, admin.getAmount());
+		    preparedStmt.setDouble(7, admin.getAmount());
 		    preparedStmt.setString(8, admin.getLisencenum());
 		    preparedStmt.setDouble(9, admin.getUid());
 			

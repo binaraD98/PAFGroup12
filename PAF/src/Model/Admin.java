@@ -10,13 +10,13 @@ public class Admin {
 	String email;
 	String phone;
 	String password;
-	String amount;
+	double amount;
 	String lisencenum;
 	public Admin() {
 		
 	}
 	
-	public Admin(int uid,String name , String company ,  String address,String email,String phone , String password,String amount,String lisencenum) {
+	public Admin(int uid,String name , String company ,  String address,String email,String phone , String password,double amount,String lisencenum) {
 		
 		this.uid = uid;
 		this.name = name;
@@ -66,7 +66,7 @@ public class Admin {
 		this.password = password;
 	}
 	
-	public void setAmount(String amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 	
@@ -105,7 +105,7 @@ public class Admin {
 		return password;
 	}
 	
-	public String getAmount() {
+	public double getAmount() {
 		return amount;
 	}
 	

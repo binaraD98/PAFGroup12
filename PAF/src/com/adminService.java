@@ -52,7 +52,7 @@ public class adminService {
 		adm.setEmail(djosnObj.get("email").getAsString());
 		adm.setPhone(djosnObj.get("phone").getAsString());
 		adm.setPassword(djosnObj.get("password").getAsString());
-		adm.setAmount(djosnObj.get("amount").getAsString());
+		adm.setAmount(djosnObj.get("amount").getAsDouble());
 		adm.setlisencenum(djosnObj.get("lisencenum").getAsString());
 	   
 		// Read the values from the JSON object
@@ -106,7 +106,7 @@ public class adminService {
 				adm.setEmail(djosnObj.get("email").getAsString());
 				adm.setPhone(djosnObj.get("phone").getAsString());
 				adm.setPassword(djosnObj.get("password").getAsString());
-				adm.setAmount(djosnObj.get("amount").getAsString());
+				adm.setAmount(djosnObj.get("amount").getAsDouble());
 				adm.setlisencenum(djosnObj.get("lisencenum").getAsString());
 			
 				
