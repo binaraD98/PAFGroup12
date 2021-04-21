@@ -8,7 +8,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -30,10 +30,12 @@ public class orderService {
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
-	public String readAllTypes() {
+	public String readAllOrders() {
 		return orders.viewOrders();
 	}
-
+	
+	
+	
 
 	// add orders
 	@POST
@@ -46,14 +48,12 @@ public class orderService {
 	
 		Order odr = new Order();
 		
-		odr.setPid(djosnObj.get("productId").getAsInt());
 		odr.setUid(djosnObj.get("userId").getAsInt());
-		odr.setQty(djosnObj.get("quantity").getAsInt());
 		odr.setName(djosnObj.get("name").getAsString());
 		odr.setAddress(djosnObj.get("address").getAsString());
 		odr.setEmail(djosnObj.get("email").getAsString());
 		odr.setPhone(djosnObj.get("phone").getAsString());
-		odr.setTotal(djosnObj.get("total").getAsDouble());
+		
 		// Read the values from the JSON object
 	
 		String output = orders.addOrders(odr);
@@ -69,21 +69,18 @@ public class orderService {
 		@Path("/")
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.TEXT_PLAIN)
-		public String updateAppType(String TypeData) {
+		public String updateOrders(String TypeData) {
 
 			// Convert the input string to a JSON object
 			JsonObject djosnObj = new JsonParser().parse(TypeData).getAsJsonObject();
 			Order odr = new Order();
 
 			odr.setOid(djosnObj.get("orderId").getAsInt());
-			odr.setPid(djosnObj.get("productId").getAsInt());
-			odr.setUid(djosnObj.get("userId").getAsInt());
-			odr.setQty(djosnObj.get("quantity").getAsInt());
 			odr.setName(djosnObj.get("name").getAsString());
 			odr.setAddress(djosnObj.get("address").getAsString());
 			odr.setEmail(djosnObj.get("email").getAsString());
 			odr.setPhone(djosnObj.get("phone").getAsString());
-			odr.setTotal(djosnObj.get("total").getAsDouble());
+			
 			
 			String output = orders.updateOrders(odr);
 			return output;
@@ -99,7 +96,7 @@ public class orderService {
 		@Path("/")
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.TEXT_PLAIN)
-		public String deletetype(String TypeData) {
+		public String deleteOrders(String TypeData) {
 			// Convert the input string to a JSON object
 			JsonObject doc = new JsonParser().parse(TypeData).getAsJsonObject();
 

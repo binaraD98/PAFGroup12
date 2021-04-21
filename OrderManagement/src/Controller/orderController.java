@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import Model.Order;
 import DBUtil.DBConnection;
 
@@ -12,6 +15,9 @@ import DBUtil.DBConnection;
 
 
 public class orderController {
+	
+	double price,unitPrice,total;
+	int quantity,cart_Id;
 	
 	DBConnection dbObj = new DBConnection();
 
@@ -31,7 +37,7 @@ public class orderController {
 			}
 			// Prepare the html table to be displayed
 			output = "<table border=\"1\"><tr><th>OrderID</th>"
-					+ "<th>ProductID</th> "+" <th>UserID</th> "+" <th>Quantity</th> "+" <th>Name</th> "+" <th> Adderss</th>" + "<th>Email</th> "+"<th>Phone</th> "+" <th>Total</th></tr>";
+					+ "<th>CartID</th> "+" <th>UserID</th>  "+" <th>Name</th> "+" <th> Adderss</th>" + "<th>Email</th> "+"<th>Phone</th> "+" <th>Total</th></tr>";
 
 			String query = "select * from orders";
 			Statement stmt = con.createStatement();
@@ -41,9 +47,8 @@ public class orderController {
 			while (rs.next()) {
 
 				order.setOid(rs.getInt("orderId"));
-				order.setPid(rs.getInt("productId"));
+				order.setCid(rs.getInt("cartId"));
 				order.setUid(rs.getInt("userId"));
-				order.setQty(rs.getInt("quantity"));
 				order.setName(rs.getString("name"));
 				order.setAddress(rs.getString("address"));
 				order.setEmail(rs.getString("email"));
@@ -52,9 +57,8 @@ public class orderController {
 
 				// Add into the html table
 				output += "<tr><td>" + order.getOid() + "</td>";
-				output += "<td>" + order.getPid() + "</td>";
+				output += "<td>" + order.getCid() + "</td>";
 				output += "<td>" + order.getUid() + "</td>";
-				output += "<td>" + order.getQty() + "</td>";
 				output += "<td>" + order.getName() + "</td>";
 				output += "<td>" + order.getAddress() + "</td>";
 				output += "<td>" + order.getEmail()+ "</td>";
@@ -89,18 +93,43 @@ public class orderController {
 				}
 
 				// create a prepared statement
-				String query = " INSERT INTO orders (productId,userId,quantity,name, address, email,phone,total) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+				String query = " INSERT INTO orders (cartId,userId,name,address,email,phone,total) VALUES (?, ?, ?, ?, ?, ?, ?)";
+				
+				
+				String query2 = "select quantity , unitPrice from cart order by cartId desc limit 1";
+				PreparedStatement preparedStmt2 = con.prepareStatement(query2); 
+				ResultSet rs = preparedStmt2.executeQuery(query2);
+				while (rs.next()){
+					
+					 quantity = (rs.getInt("quantity"));
+			         unitPrice = (rs.getDouble("unitPrice")); 	
+				}
+				total = quantity * unitPrice;
+				preparedStmt2.execute();
+				
+				
+			 	String query3 = "select cartId from cart order by cartId desc limit 1";
+				PreparedStatement preparedStmt3 = con.prepareStatement(query3); 
+				ResultSet rs3 = preparedStmt3.executeQuery(query3);
+				while (rs3.next()){
+					
+					cart_Id = rs3.getInt("cartId");
+				}
+				
+				preparedStmt3.execute();
+				
+				
+				
 				PreparedStatement preparedStmt = con.prepareStatement(query);
 
 				// binding values
-				preparedStmt.setInt(1, order.getPid());
+				preparedStmt.setInt(1,cart_Id);
 				preparedStmt.setInt(2, order.getUid());
-				preparedStmt.setInt(3, order.getQty());
-				preparedStmt.setString(4, order.getName());
-				preparedStmt.setString(5, order.getAddress());
-				preparedStmt.setString(6, order.getEmail());
-				preparedStmt.setString(7, order.getPhone());
-				preparedStmt.setDouble(8, order.getTotal());
+				preparedStmt.setString(3, order.getName());
+				preparedStmt.setString(4, order.getAddress());
+				preparedStmt.setString(5, order.getEmail());
+				preparedStmt.setString(6, order.getPhone());
+				preparedStmt.setDouble(7, total);
 				
 				// execute the statement
 				preparedStmt.execute();
@@ -130,19 +159,16 @@ public class orderController {
 						return "Error while connecting to the database for updating.";
 					}
 					// create a prepared statement
-					String query = "UPDATE orders SET productId=?,userId=?,quantity=?, name=?,address=?,email=?,phone=?,total=? WHERE orderId =?";
+					String query = "UPDATE orders SET name=?,address=?,email=?,phone=? WHERE orderId =?";
 					PreparedStatement preparedStmt = con.prepareStatement(query);
 
 					// binding values
-					preparedStmt.setInt(1, order.getPid());
-					preparedStmt.setInt(2, order.getUid());
-					preparedStmt.setInt(3, order.getQty());
-					preparedStmt.setString(4, order.getName());
-					preparedStmt.setString(5, order.getAddress());
-					preparedStmt.setString(6, order.getEmail());
-					preparedStmt.setString(7, order.getPhone());
-					preparedStmt.setDouble(8, order.getTotal());
-					preparedStmt.setInt(9, order.getOid());
+					
+					preparedStmt.setString(1, order.getName());
+					preparedStmt.setString(2, order.getAddress());
+					preparedStmt.setString(3, order.getEmail());
+					preparedStmt.setString(4, order.getPhone());
+					preparedStmt.setInt(5, order.getOid());
 					// execute the statement
 					preparedStmt.execute();
 					con.close();
@@ -187,18 +213,7 @@ public class orderController {
 				return output;
 			}
 			
-	
-			//====================================search type by ID ===================================
-	
-			
-
-			
-			
-			
-			
-			
-			
-			
+				
 			
 			
 }
