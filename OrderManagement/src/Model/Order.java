@@ -3,7 +3,6 @@ package Model;
 public class Order {
 	int oid;
 	int cid;
-	int uid;
 	String name;
 	String address;
 	String email;
@@ -14,12 +13,10 @@ public class Order {
 		
 	}
 	
-	public Order(int oid, int cid, int uid, String name, String address, String email, String phone, double total) {
+	public Order(int oid, int cid, String name, String address, String email, String phone, double total) {
 		
 		this.oid = oid;
 		this.cid = cid;
-		this.uid = uid;
-		
 		this.name = name;
 		this.address = address;
 		this.email = email;
@@ -37,12 +34,6 @@ public class Order {
 		this.cid = cid;
 	}
 	
-	public void setUid(int uid) {
-		this.uid = uid;
-	}
-	
-	
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -70,12 +61,6 @@ public class Order {
 	public int getCid() {
 		return cid;
 	}
-	
-	public int getUid() {
-		return uid;
-	}
-	
-	
 	
 	public String getName() {
 		return name;

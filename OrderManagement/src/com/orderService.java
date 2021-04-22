@@ -47,8 +47,6 @@ public class orderService {
 		JsonObject djosnObj = new JsonParser().parse(TypeData).getAsJsonObject();
 	
 		Order odr = new Order();
-		
-		odr.setUid(djosnObj.get("userId").getAsInt());
 		odr.setName(djosnObj.get("name").getAsString());
 		odr.setAddress(djosnObj.get("address").getAsString());
 		odr.setEmail(djosnObj.get("email").getAsString());

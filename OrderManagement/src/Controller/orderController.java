@@ -37,7 +37,7 @@ public class orderController {
 			}
 			// Prepare the html table to be displayed
 			output = "<table border=\"1\"><tr><th>OrderID</th>"
-					+ "<th>CartID</th> "+" <th>UserID</th>  "+" <th>Name</th> "+" <th> Adderss</th>" + "<th>Email</th> "+"<th>Phone</th> "+" <th>Total</th></tr>";
+					+ "<th>CartID</th> "+" <th>Name</th> "+" <th> Adderss</th>" + "<th>Email</th> "+"<th>Phone</th> "+" <th>Total</th></tr>";
 
 			String query = "select * from orders";
 			Statement stmt = con.createStatement();
@@ -48,7 +48,6 @@ public class orderController {
 
 				order.setOid(rs.getInt("orderId"));
 				order.setCid(rs.getInt("cartId"));
-				order.setUid(rs.getInt("userId"));
 				order.setName(rs.getString("name"));
 				order.setAddress(rs.getString("address"));
 				order.setEmail(rs.getString("email"));
@@ -58,7 +57,6 @@ public class orderController {
 				// Add into the html table
 				output += "<tr><td>" + order.getOid() + "</td>";
 				output += "<td>" + order.getCid() + "</td>";
-				output += "<td>" + order.getUid() + "</td>";
 				output += "<td>" + order.getName() + "</td>";
 				output += "<td>" + order.getAddress() + "</td>";
 				output += "<td>" + order.getEmail()+ "</td>";
@@ -93,7 +91,7 @@ public class orderController {
 				}
 
 				// create a prepared statement
-				String query = " INSERT INTO orders (cartId,userId,name,address,email,phone,total) VALUES (?, ?, ?, ?, ?, ?, ?)";
+				String query = " INSERT INTO orders (cartId,name,address,email,phone,total) VALUES (?, ?, ?, ?, ?, ?)";
 				
 				
 				String query2 = "select quantity , unitPrice from cart order by cartId desc limit 1";
@@ -124,12 +122,11 @@ public class orderController {
 
 				// binding values
 				preparedStmt.setInt(1,cart_Id);
-				preparedStmt.setInt(2, order.getUid());
-				preparedStmt.setString(3, order.getName());
-				preparedStmt.setString(4, order.getAddress());
-				preparedStmt.setString(5, order.getEmail());
-				preparedStmt.setString(6, order.getPhone());
-				preparedStmt.setDouble(7, total);
+				preparedStmt.setString(2, order.getName());
+				preparedStmt.setString(3, order.getAddress());
+				preparedStmt.setString(4, order.getEmail());
+				preparedStmt.setString(5, order.getPhone());
+				preparedStmt.setDouble(6, total);
 				
 				// execute the statement
 				preparedStmt.execute();

@@ -14,6 +14,7 @@ public class cartController {
 	double price;
 	DBConnection dbObj = new DBConnection();
 	
+	//View Shopping Cart 
 	public String viewCart() {
 
 		String output = "";
@@ -64,6 +65,8 @@ public class cartController {
 		return output;
 	}
 	
+	//Add to Cart
+	
 	public String addToCart(shoppingCart cart) {
 
 		String output = "";
@@ -112,6 +115,8 @@ public class cartController {
 		return output;
 	}
 	
+	//Update Cart
+	
 	public String updateCart(shoppingCart cart) {
 
 		String output = "";
@@ -150,11 +155,13 @@ public class cartController {
 			con.close();
 			output = "Updated successfully [ ID : "+cart.getCid()+" ]";
 		} catch (Exception e) {
-			output = "Error while updating the Order Id " + cart.getCid();
+			output = "Error while updating the Cart Id " + cart.getCid();
 			System.err.println(e.getMessage());
 		}
 		return output;
 	}
+	
+	//Delete From Cart
 	
 	public String deleteFromCart(shoppingCart cart) {
 		String output = "";
@@ -174,11 +181,11 @@ public class cartController {
 
 			preparedStmt.execute();
 			con.close();
-			output = "Deleted successfully [ Order Id : "+cart.getCid()+" ]";
+			output = "Deleted successfully [ Cart Id : "+cart.getCid()+" ]";
 
 		} catch (Exception e) {
 
-			output = "Error while deleting the  Order Id :" + cart.getCid();
+			output = "Error while deleting the  Cart Id :" + cart.getCid();
 			System.err.println(e.getMessage());
 		}
 
