@@ -5,6 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import javax.ws.rs.core.MediaType;
+
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.WebResource;
+
 import DBUtil.DBConnection;
 import Model.Order;
 import Model.shoppingCart;
@@ -80,25 +85,16 @@ public class cartController {
 			// create a prepared statement
 			String query = " INSERT INTO cart (productId,userId,unitPrice,quantity) VALUES (?,?, ?, ?)";
 			
-			String query2 = "select productPrice from products where productID = '"+cart.getPid()+"'";
-			PreparedStatement preparedStmt2 = con.prepareStatement(query2); 
-			ResultSet rs2 = preparedStmt2.executeQuery(query2);
-			while (rs2.next()){
-				
-				price = rs2.getDouble("productPrice");
-				
-			}
-			
-			
-			preparedStmt2.execute();
-			
-			
 			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			Client client = new Client();
+			WebResource resource = client.resource("http://localhost:8081/Product_Managemenet/ProductService/Products/"+cart.getPid());
+			String response = resource.type(MediaType.TEXT_PLAIN).get(String.class);
 
 			// binding values
 			preparedStmt.setInt(1, cart.getPid());
 			preparedStmt.setInt(2, cart.getUid());
-			preparedStmt.setDouble(3, price);
+			preparedStmt.setDouble(3, Double.parseDouble(response));
 			preparedStmt.setInt(4, cart.getQty());
 			
 			
