@@ -67,11 +67,21 @@ public class ProductService {
 	//Convert the input string to an XML document
 	 Document doc = Jsoup.parse(productData, "", Parser.xmlParser()); 
 	 
-	//Read the value from the element <itemID>
+	//Read the value from the element <productID>
 	 String productID = doc.select("productID").text(); 
 	 String output = productObj.deleteProduct(productID); 
 	return output; 
 	}
+	
+	
+	@GET
+	@Path("/{productID}") 
+	@Produces(MediaType.TEXT_HTML) 	
+	public String readProduct(@PathParam("productID") String pid) { 
+		 //String id = Integer.toString(pro_ID);
+		 return productObj.readUnitPrice(pid);
+	} 
+	
 
 	
 }
