@@ -38,7 +38,7 @@ public class Product {
 			preparedStmt.setString(5, inventor);
 			preparedStmt.setString(6, type);
 
-			// execute the statement3
+			// execute the statement
 			preparedStmt.execute();
 			con.close();
 			output = "Inserted successfully";
@@ -49,6 +49,8 @@ public class Product {
 		return output;
 	}
 
+	
+	//Read Products
 	public String readProducts() {
 		String output = "";
 		try {
@@ -93,7 +95,7 @@ public class Product {
 		return output;
 	}
 
-	
+	//Update Products
 	public String updateProduct(String ID, String code, String name, String price, String inventor, String type)
 	 { 
 	 String output = ""; 
@@ -124,7 +126,10 @@ public class Product {
 	 } 
 	 return output; 
 	 }
-
+	
+	
+	
+    //Delete Products
 	public String deleteProduct(String productID) {
 		String output = "";
 		try {
@@ -142,11 +147,54 @@ public class Product {
 			con.close();
 			output = "Deleted successfully";
 		} catch (Exception e) {
-			output = "Error while deleting the item.";
+			output = "Error while deleting the Product..";
 			System.err.println(e.getMessage());
 		}
 		return output;
 	}
+	
+	
+	//==========================to read price of a particular product======================================
+	
+			public String readUnitPrice(String pid){	 
+				String output = "";
+				//int id = Integer.parseInt(pro_ID);
+				
+				try{
+					 Connection con = connect();
+					 
+					if (con == null){
+						return "Error while connecting to the database for reading."; 
+					}
+							
+					//Query to execute
+					String query = "select productPrice from products where productID = '"+pid+"'";
+					//creating the prepared statement
+					PreparedStatement preparedStmt = con.prepareStatement(query); 
+					//preparedStmt.setInt(1, Integer.parseInt(pro_ID));
+					
+					//Retrieving the values to a result set
+					ResultSet rs = preparedStmt.executeQuery(query);
+					
+					// iterate through the rows in the result set
+					while (rs.next()){
+						
+						String price = Double.toString(rs.getDouble("productPrice"));				
+						output = price;				
+						
+					}
+					con.close();
+				}
+				
+				catch (Exception e)
+				{
+					output = "Error while reading the product unit price.";
+					System.err.println(e.getMessage());
+				}
+				return output;
+			}
+
+		
 
 	
 	
