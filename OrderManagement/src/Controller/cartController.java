@@ -127,7 +127,7 @@ public class cartController {
 				return "Error while connecting to the database for updating.";
 			}
 			// create a prepared statement
-			String query = "UPDATE cart SET productId =?,userId=?,unitPrice=?,quantity=? WHERE cartId =?";
+			String query = "UPDATE cart SET productId =?,unitPrice=?,quantity=? WHERE cartId =?";
 			
 			String query2 = "select productPrice from products where productID = '"+cart.getPid()+"'";
 			PreparedStatement preparedStmt2 = con.prepareStatement(query2); 
@@ -146,10 +146,9 @@ public class cartController {
 			// binding values
 			
 			preparedStmt.setInt(1, cart.getPid());
-			preparedStmt.setInt(2, cart.getUid());
-			preparedStmt.setDouble(3, price);
-			preparedStmt.setInt(4, cart.getQty());
-			preparedStmt.setInt(5, cart.getCid());
+			preparedStmt.setDouble(2, price);
+			preparedStmt.setInt(3, cart.getQty());
+			preparedStmt.setInt(4, cart.getCid());
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
@@ -192,7 +191,55 @@ public class cartController {
 		return output;
 	}
 	
+	
+	//Filter By User Id
+	public String viewCartItemsById(int uid) {
 
+		String output = "";
+		
+		shoppingCart  cart = new shoppingCart();
+		
+		try {
+			Connection con = dbObj.connect();
+			if (con == null) {
+				return "Error while connecting to the database for reading.";
+			}
+			// Prepare the html table to be displayed
+			output = "<table border=\"1\"><tr><th>CartID</th>"
+					+ "<th>ProductId</th> "+" <th>UnitPrice</th> "+" <th>Quantity</th> </tr>";
+
+			String query = "select * from cart where userId = '"+uid+"'";
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+
+			// iterate through the rows in the result set
+			while (rs.next()) {
+
+				cart.setCid(rs.getInt("cartId"));
+				cart.setPid(rs.getInt("productId"));
+				cart.setUnitP(rs.getDouble("unitPrice"));
+				cart.setQty(rs.getInt("quantity"));
+				
+
+				// Add into the html table
+				output += "<tr><td>" + cart.getCid() + "</td>";
+				output += "<td>" + cart.getPid() + "</td>";
+				output += "<td>" + cart.getUnitP() + "</td>";
+				output += "<td>" + cart.getQty() + "</td>";
+				
+				
+			}
+			con.close();
+			// Complete the html table
+			output += "</table>";
+
+		} catch (Exception e) {
+			output = "Error while reading the Cart Details.";
+			System.err.println(e.getMessage());
+		}
+
+		return output;
+	}
 
 
 }

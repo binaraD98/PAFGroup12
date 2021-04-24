@@ -6,6 +6,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -28,6 +29,13 @@ cartController crt = new cartController();
 	@Produces(MediaType.TEXT_HTML)
 	public String readAllFromCart() {
 		return crt.viewCart();
+	}
+	
+	@GET
+	@Path("/{userId}")
+	@Produces(MediaType.TEXT_HTML)
+	public String readByIdFromCart(@PathParam("userId") int uid) {
+		return crt.viewCartItemsById(uid);
 	}
 	
 	@POST
@@ -64,7 +72,6 @@ cartController crt = new cartController();
 
 		scart.setCid(djosnObj.get("cartId").getAsInt());
 		scart.setPid(djosnObj.get("productId").getAsInt());
-		scart.setUid(djosnObj.get("userId").getAsInt());
 		scart.setQty(djosnObj.get("quantity").getAsInt());
 		
 		
@@ -89,6 +96,8 @@ cartController crt = new cartController();
 		String output = crt.deleteFromCart(scart);
 		return output;
 	}
+	
+	
 
 
 }
