@@ -34,6 +34,12 @@ public class orderService {
 		return orders.viewOrders();
 	}
 	
+	@GET
+	@Path("/{orderId}")
+	@Produces(MediaType.TEXT_HTML)
+	public String readByIdFromCart(@PathParam("orderId") int oid) {
+		return orders.viewOrdersById(oid);
+	}
 	
 	
 

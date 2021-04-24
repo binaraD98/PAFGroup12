@@ -210,6 +210,57 @@ public class orderController {
 				return output;
 			}
 			
+			public String viewOrdersById(int oid) {
+
+				String output = "";
+				
+				Order  order = new Order();
+				
+				try {
+					Connection con = dbObj.connect();
+					if (con == null) {
+						return "Error while connecting to the database for reading.";
+					}
+					// Prepare the html table to be displayed
+					output = "<table border=\"1\"><tr><th>OrderID</th>"
+							+ "<th>CartID</th> "+" <th>Name</th> "+" <th> Adderss</th>" + "<th>Email</th> "+"<th>Phone</th> "+" <th>Total</th></tr>";
+
+					String query = "select * from orders where orderId ='"+oid+"'  ";
+					Statement stmt = con.createStatement();
+					ResultSet rs = stmt.executeQuery(query);
+
+					// iterate through the rows in the result set
+					while (rs.next()) {
+
+						order.setOid(rs.getInt("orderId"));
+						order.setCid(rs.getInt("cartId"));
+						order.setName(rs.getString("name"));
+						order.setAddress(rs.getString("address"));
+						order.setEmail(rs.getString("email"));
+						order.setPhone(rs.getString("phone"));
+						order.setTotal(rs.getDouble("total"));
+
+						// Add into the html table
+						output += "<tr><td>" + order.getOid() + "</td>";
+						output += "<td>" + order.getCid() + "</td>";
+						output += "<td>" + order.getName() + "</td>";
+						output += "<td>" + order.getAddress() + "</td>";
+						output += "<td>" + order.getEmail()+ "</td>";
+						output += "<td>" + order.getPhone()+ "</td>";
+						output += "<td>" + order.getTotal()+ "</td>";
+						
+					}
+					con.close();
+					// Complete the html table
+					output += "</table>";
+
+				} catch (Exception e) {
+					output = "Error while reading the Order Details By Id.";
+					System.err.println(e.getMessage());
+				}
+
+				return output;
+			}
 				
 			
 			

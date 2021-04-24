@@ -230,7 +230,7 @@ public class cartController {
 			output += "</table>";
 
 		} catch (Exception e) {
-			output = "Error while reading the Cart Details.";
+			output = "Error while reading the Cart Details By UserId.";
 			System.err.println(e.getMessage());
 		}
 
