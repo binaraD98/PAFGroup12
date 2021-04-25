@@ -25,5 +25,12 @@ propController props = new propController();
 		public String readAllPropss() {
 			return props.Viewprops();
 		}
+	
+		@GET
+		@Path("/{propID}")
+		@Produces(MediaType.TEXT_HTML)
+		public String readByIdFromProps(@PathParam("propID") int propID) {
+			return props.viewPropsById(propID);
+		}
 
 }
